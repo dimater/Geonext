@@ -2,3 +2,4 @@
 .vscode/sftp.json
 .well-known/
 chatscript/
+include/config.php

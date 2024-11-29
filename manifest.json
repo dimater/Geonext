@@ -1,0 +1,52 @@
+{
+  "short_name": "Geonext",
+  "name": "Geonext",
+  "description": "Geonext es una plataforma innovadora diseñada para crear una comunidad global de profesionales en el campo de la topografía y la geodesia, con acceso abierto al público. A través de la app, expertos y aficionados pueden conectarse, compartir conocimientos y colaborar en proyectos de medición y análisis geoespacial.",
+  "icons": [
+    {
+      "src": "https://geochat.geonetmarketplace.com/assets/files/defaults/pwa_icon-72x72.png",
+      "type": "image/png",
+      "sizes": "72x72"
+    },
+    {
+      "src": "https://geochat.geonetmarketplace.com/assets/files/defaults/pwa_icon-96x96.png",
+      "type": "image/png",
+      "sizes": "96x96"
+    },
+    {
+      "src": "https://geochat.geonetmarketplace.com/assets/files/defaults/pwa_icon-128x128.png",
+      "type": "image/png",
+      "sizes": "128x128"
+    },
+    {
+      "src": "https://geochat.geonetmarketplace.com/assets/files/defaults/pwa_icon-144x144.png",
+      "type": "image/png",
+      "sizes": "144x144"
+    },
+    {
+      "src": "https://geochat.geonetmarketplace.com/assets/files/defaults/pwa_icon-152x152.png",
+      "type": "image/png",
+      "sizes": "152x152"
+    },
+    {
+      "src": "https://geochat.geonetmarketplace.com/assets/files/defaults/pwa_icon-192x192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "https://geochat.geonetmarketplace.com/assets/files/defaults/pwa_icon-512x512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/",
+  "scope": "/",
+  "display": "minimal-ui",
+  "background_color": "#000000",
+  "theme_color": "#020202",
+  "dir": "ltr",
+  "categories": [
+    "social"
+  ],
+  "id": "Geonext"
+}
