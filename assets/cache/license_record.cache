@@ -1,0 +1,8 @@
+ 
+        {
+            "license": "xxxxxxx",
+            "extended_license": true,
+            "sold_at": "2022.10.10",
+            "supported_until": "2040.10.10",
+            "buyer": "xxxxxx"
+        }

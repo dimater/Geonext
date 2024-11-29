@@ -23,7 +23,7 @@
             </div>
         </div>
     </div>
-
+     
     <?php include 'layouts/chat_page/header_site_adverts.php'; ?>
 
     <section class="main main_window" <?php echo(Registry::load('appearance')->main_window_style) ?> last_realtime_log_id=0>
@@ -47,7 +47,7 @@
 
 
     <?php if (Registry::load('current_user')->logged_in) {
-        if (isset(Registry::load('config')->pro_version) && !empty(Registry::load('config')->pro_version)) {
+        if (isset(Registry::load('config')->app_version) && !empty(Registry::load('config')->app_version)) {
             if (role(['permissions' => ['wallet' => 'topup_wallet']])) {
                 include 'layouts/chat_page/wallet_topup_modal.php';
             }
@@ -83,6 +83,8 @@
         }
     }
     ?>
+
+    
 
     <div class="on_site_load d-none">
         <?php if (isset(Registry::load('config')->load_user_profile) && !empty(Registry::load('config')->load_user_profile)) {

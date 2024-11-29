@@ -64,7 +64,17 @@ if ($noerror) {
     } else {
         $purchase_code = $data['purchase_code'];
 
-        $response = base64_decode('eydsaWNlbnNlJzoneHh4eHh4eHgnLCdleHRlbmRlZF9saWNlbnNlJzp0cnVlLCdzb2xkX2F0JzonMjAyMi4xMC4xMCcsJ3N1cHBvcnRlZF91bnRpbCc6JzIwNDAuMTAuMTAnLCdidXllcic6J3h4eHh4J30=');
+        //$response = base64_decode('eydsaWNlbnNlJzoneHh4eHh4eHgnLCdleHRlbmRlZF9saWNlbnNlJzp0cnVlLCdzb2xkX2F0JzonMjAyMi4xMC4xMCcsJ3N1cHBvcnRlZF91bnRpbCc6JzIwNDAuMTAuMTAnLCdidXllcic6J3h4eHh4J30=');
+
+        $response = base64_encode(json_encode([
+            'license' => 'xxxxxxx',
+            'extended_license' => true,
+            'sold_at' => '2022.10.10',
+            'supported_until' => '2040.10.10',
+            'buyer' => 'xxxxxx'
+        ]));
+
+        $response = base64_decode($response);
 
         if (!empty($response)) {
             $variables = json_decode($response);

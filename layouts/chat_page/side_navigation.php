@@ -26,9 +26,204 @@
     <div class="center">
         <ul class="menu_items">
 
-            <?php include 'layouts/chat_page/custom_menu_items_top.php'; ?>
+            <?php 
+             if (role(['permissions' => ['private_conversations' => 'view_private_chats']])) {
+                ?>
+                <li class="load_aside realtime_module load_private_conversations" load="private_conversations"
+                    module="private_conversations">
+                    <div class="menu_item">
+                        <span class="icon">
 
+                            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                viewBox="0 0 1024 1024">
+                                <path fill="currentColor"
+                                    d="M246.858 495.428c0-27.456 22.258-49.714 49.714-49.714v0h232c27.456 0 49.714 22.258 49.714 49.714s-22.258 49.714-49.714 49.714v0h-232c-27.456 0-49.714-22.258-49.714-49.714v0zM296.572 280c-27.456 0-49.714 22.258-49.714 49.714s22.258 49.714 49.714 49.714v0h430.858c27.456 0 49.714-22.258 49.714-49.714s-22.258-49.714-49.714-49.714v0h-430.858z">
+                                </path>
+                                <path fill="currentColor"
+                                    d="M976 197.142c0-82.369-66.773-149.142-149.142-149.142v0h-629.714c-82.369 0-149.142 66.773-149.142 149.142v0 729.142c0 0.002 0 0.004 0 0.006 0 27.456 22.258 49.714 49.714 49.714 13.070 0 24.962-5.044 33.836-13.291l-0.032 0.027 185.666-172.342c8.841-8.216 20.731-13.258 33.8-13.258 0.002 0 0.004 0 0.007 0h475.866c82.369 0 149.142-66.773 149.142-149.142v0-430.858zM826.858 147.428c27.456 0 49.714 22.258 49.714 49.714v0 430.858c0 27.456-22.258 49.714-49.714 49.714v0h-475.798c-0.025 0-0.056 0-0.085 0-39.202 0-74.871 15.125-101.491 39.857l0.094-0.085-102.146 94.788v-615.132c0-27.456 22.258-49.714 49.714-49.714v0h629.714z">
+                                </path>
+                            </svg>
+
+                        </span>
+                        <span class="title">
+                            <?php echo Registry::load('strings')->messages ?>
+                        </span>
+                        <span class="unread"></span>
+                    </div>
+                </li>
+                <?php
+            }
+
+
+            include 'layouts/chat_page/custom_menu_items_top.php'; 
+            
+            ///mis menus por code
+            
+            ?>
+
+            <li class="has_child">
+                    <div class="menu_item">
+                        <span class="icon">
+
+                             <i class="bi-people custom-cursor-on-hover"></i>
+
+                        </span>
+                        <span class="title">
+                            Comunidad
+                        </span>
+                    </div>
+                    <div class="child_menu">
+                        <ul>
+ 
+                                <li class="load_aside  "  load="publicaciones_categories">
+                                    <div class="menu_item">
+                                        <span class="icon">
+                                        <i class="bi-people custom-cursor-on-hover"></i>
+                                        </span>
+                                        <span class="title">
+                                            Publicaciones  
+                                            </span>
+                                        <span class="unread"></span>
+                                    </div>
+                                </li>
+                                 
+
+                        <?php if (Registry::load('settings')->categorize_groups === 'yes') {
+                                ?>
+                                <li class="load_aside load_group_categories" load="group_categories">
+                                    <div class="menu_item">
+                                        <span class="icon">
+                                            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                viewBox="0 0 1024 1024">
+                                                <path fill="currentColor"
+                                                    d="M111.531 87.765c-9.351 2.542-16.968 8.642-21.456 16.719l-0.090 0.177-3.797 7.125v331.093l4.267 7.595c4.693 8.405 12.544 14.507 21.973 17.109 8.448 2.347 321.365 2.347 329.813 0 9.493-2.619 17.237-8.778 21.88-16.932l0.093-0.177 4.267-7.595v-331.093l-3.797-7.125c-4.523-8.405-11.477-13.739-22.187-16.981-11.179-3.371-320.213-3.285-330.965 0.085zM580.864 87.765c-9.351 2.542-16.968 8.642-21.456 16.719l-0.090 0.177-3.797 7.125v331.093l4.267 7.595c4.693 8.405 12.544 14.507 21.973 17.109 8.448 2.347 321.365 2.347 329.813 0 9.493-2.619 17.237-8.778 21.88-16.932l0.093-0.177 4.267-7.595v-331.093l-3.797-7.125c-4.523-8.405-11.477-13.739-22.187-16.981-11.179-3.371-320.213-3.285-330.965 0.085zM384 277.333v106.667h-213.333v-213.333h213.333v106.667zM853.333 277.333v106.667h-213.333v-213.333h213.333v106.667zM111.531 557.099c-9.351 2.542-16.968 8.642-21.456 16.719l-0.090 0.177-3.797 7.125v331.093l4.267 7.595c4.693 8.405 12.544 14.507 21.973 17.109 8.448 2.347 321.365 2.347 329.813 0 9.493-2.619 17.237-8.778 21.88-16.932l0.093-0.177 4.267-7.595v-331.093l-3.797-7.125c-4.523-8.405-11.477-13.739-22.187-16.981-11.179-3.371-320.213-3.285-330.965 0.085zM580.864 557.099c-9.351 2.542-16.968 8.642-21.456 16.719l-0.090 0.177-3.797 7.125v331.093l4.267 7.595c4.693 8.405 12.544 14.507 21.973 17.109 8.448 2.347 321.365 2.347 329.813 0 9.493-2.619 17.237-8.778 21.88-16.932l0.093-0.177 4.267-7.595v-331.093l-3.797-7.125c-4.523-8.405-11.477-13.739-22.187-16.981-11.179-3.371-320.213-3.285-330.965 0.085zM384 746.667v106.667h-213.333v-213.333h213.333v106.667zM853.333 746.667v106.667h-213.333v-213.333h213.333v106.667z">
+                                                </path>
+                                            </svg>
+                                        </span>
+                                        <span class="title">
+                                            <?php echo (Registry::load('strings')->group_categories) ?>
+                                        </span>
+                                        <span class="unread"></span>
+                                    </div>
+                                </li>
+                                <?php 
+                                
+                            } ?>
+
+                            
+
+                                <li class="load_aside realtime_module load_groups" load="groups" module="groups" unread="0">
+                                            <div class="menu_item">
+                                                <span class="icon">
+                                                    <svg fill="currentColor" width="20" height="20" viewBox="0 0 35 35" data-name="Layer 2"
+                                                        id="Layer_2" xmlns="http://www.w3.org/2000/svg">
+                                                        <path
+                                                            d="M30.35,22h-.1a1.25,1.25,0,0,1-1.15-1.34c0-.34,0-.67,0-1A11.84,11.84,0,0,0,21.19,8.44,1.25,1.25,0,0,1,22,6.07a14.37,14.37,0,0,1,9.63,13.59c0,.4,0,.8-.05,1.2A1.24,1.24,0,0,1,30.35,22Z" />
+                                                        <path
+                                                            d="M4.43,22.08A1.25,1.25,0,0,1,3.19,21c0-.42-.06-.86-.06-1.29A14.37,14.37,0,0,1,12.76,6.07a1.25,1.25,0,0,1,.82,2.37A11.84,11.84,0,0,0,5.63,19.66c0,.35,0,.7,0,1.05a1.24,1.24,0,0,1-1.12,1.36Z" />
+                                                        <path
+                                                            d="M17.38,34A14,14,0,0,1,7,29.5a1.25,1.25,0,1,1,1.82-1.71,11.59,11.59,0,0,0,8.55,3.72A11.71,11.71,0,0,0,26,27.71a1.25,1.25,0,1,1,1.84,1.69A14.23,14.23,0,0,1,17.38,34Z" />
+                                                        <path
+                                                            d="M17.39,12.1a5.56,5.56,0,1,1,5.52-5.55A5.55,5.55,0,0,1,17.39,12.1Zm0-8.61a3.06,3.06,0,1,0,3,3.06A3,3,0,0,0,17.39,3.49Z" />
+                                                        <path
+                                                            d="M29.23,30.48a5.56,5.56,0,1,1,5.52-5.56A5.55,5.55,0,0,1,29.23,30.48Zm0-8.62a3.06,3.06,0,1,0,3,3.06A3,3,0,0,0,29.23,21.86Z" />
+                                                        <path
+                                                            d="M5.77,30.48a5.56,5.56,0,1,1,5.53-5.56A5.55,5.55,0,0,1,5.77,30.48Zm0-8.62a3.06,3.06,0,1,0,3,3.06A3,3,0,0,0,5.77,21.86Z" />
+                                                    </svg>
+                                                </span>
+                                                <span class="title">
+                                                    <?php echo (Registry::load('strings')->groups) ?>
+                                                </span>
+                                                <span class="unread"></span>
+                                            </div>
+                                </li>
+                            <?php
+                            if (role(['permissions' => ['site_users' => 'view_online_users']])) {
+                                            ?>
+                                <li class="load_aside realtime_module load_online_users" module="online_users" load="online">
+                                                <div class="menu_item">
+                                                    <span class="icon">
+                                                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                            viewBox="0 0 1024 1024">
+                                                            <path fill="currentColor"
+                                                                d="M521.192 119.219c80.936 0 142.831 61.892 142.831 142.831s-61.892 142.831-142.831 142.831-142.831-61.892-142.831-142.831 66.653-142.831 142.831-142.831zM521.192 24c-133.308 0-238.050 104.742-238.050 238.050s104.742 238.050 238.050 238.050 238.050-104.742 238.050-238.050-104.742-238.050-238.050-238.050zM411.689 1000h-247.57c-71.414 0-128.547-57.13-128.547-133.308v-80.936c0-119.025 95.219-214.244 214.244-214.244h452.292c28.567 0 47.611 19.044 47.611 47.611s-19.044 47.611-47.611 47.611h-452.292c-66.653 0-119.025 57.13-119.025 119.025v85.697c0 19.044 14.283 38.089 33.328 38.089h247.57c28.567 0 47.611 19.044 47.611 47.611s-19.044 42.85-47.611 42.85z">
+                                                            </path>
+                                                            <path fill="currentColor"
+                                                                d="M973.486 719.103c-19.044-19.044-47.611-19.044-66.653 0l-166.633 166.633-104.742-99.981c-19.044-19.044-47.611-19.044-66.653 0s-19.044 47.611 0 66.653l133.308 133.308s4.761 4.761 9.522 4.761 4.761 4.761 9.522 4.761h38.089c4.761 0 4.761-4.761 9.522-4.761s4.761-4.761 9.522-4.761l199.961-199.961c14.283-19.044 14.283-47.611-4.761-66.653z">
+                                                            </path>
+                                                        </svg>
+                            
+                                                    </span>
+                                                    <span class="title">
+                                                        <?php echo Registry::load('strings')->online ?>
+                                                    </span>
+                                                </div>
+                                </li>
+                            <?php
+                             } 
+                              if (Registry::load('settings')->friend_system === 'enable') {
+                if (role(['permissions' => ['friend_system' => 'view_friends']])) {
+                    ?>
+                    <li class="load_aside realtime_module load_friends" module="friends" load="friends">
+                        <div class="menu_item">
+                            <span class="icon">
+                                <svg width="20" height="20" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="none">
+                                    <g fill="currentColor">
+                                        <path fill-rule="evenodd"
+                                            d="M6 2a3.5 3.5 0 100 7 3.5 3.5 0 000-7zM4 5.5a2 2 0 114 0 2 2 0 01-4 0z"
+                                            clip-rule="evenodd"></path>
+                                        <path
+                                            d="M4.25 10A3.75 3.75 0 00.5 13.75v.5a.75.75 0 001.5 0v-.5a2.25 2.25 0 012.25-2.25h3.5A2.25 2.25 0 0110 13.75v.5a.75.75 0 001.5 0v-.5A3.75 3.75 0 007.75 10h-3.5zM10.25 8.25A.75.75 0 0111 7.5h1v-1a.75.75 0 011.5 0v1h1a.75.75 0 010 1.5h-1v1a.75.75 0 01-1.5 0V9h-1a.75.75 0 01-.75-.75z">
+                                        </path>
+                                    </g>
+                                </svg>
+                            </span>
+                            <span class="title">
+                                <?php echo Registry::load('strings')->friends ?>
+                            </span>
+                            <span class="unread"></span>
+                        </div>
+                    </li>
+                    <?php
+                }
+            }
+                             ?>
+
+<?php
+           
+           
+           if (Registry::load('settings')->people_nearby_feature === 'enable') {
+               if (role(['permissions' => ['site_users' => 'view_nearby_users']])) {
+                   ?>
+                   <li class="load_aside load_nearby_users" load="nearby_users">
+                       <div class="menu_item">
+                           <span class="icon">
+                               <svg fill="currentColor" width="20" height="20" viewBox="0 0 24 24"
+                                   xmlns="http://www.w3.org/2000/svg">
+                                   <path
+                                       d="M2,21h8a1,1,0,0,0,0-2H3.071A7.011,7.011,0,0,1,10,13a5.044,5.044,0,1,0-3.377-1.337A9.01,9.01,0,0,0,1,20,1,1,0,0,0,2,21ZM10,5A3,3,0,1,1,7,8,3,3,0,0,1,10,5Zm9,16h0A6.408,6.408,0,0,0,23,15,4,4,0,1,0,15,15,6.408,6.408,0,0,0,19,21h0Zm-1.5-6A1.5,1.5,0,1,1,19,16.5,1.5,1.5,0,0,1,17.5,15Z" />
+                               </svg>
+                           </span>
+                           <span class="title">
+                               <?php echo Registry::load('strings')->nearby_users ?>
+                           </span>
+                       </div>
+                   </li>
+                   <?php
+               }
+           }
+
+          
+           ?>
+
+                        </ul>
+                    </div>
+                </li>
+
+             
             <?php
+
+            ///fin de menu code
             if (role(['permissions' => ['site_notifications' => 'view']])) {
                 ?>
                 <li class="load_aside realtime_module load_site_notifications" module="site_notifications"
@@ -108,26 +303,7 @@
                 <?php
             } ?>
 
-            <?php if (Registry::load('settings')->categorize_groups === 'yes') {
-                ?>
-                <li class="load_aside load_group_categories" load="group_categories">
-                    <div class="menu_item">
-                        <span class="icon">
-                            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                viewBox="0 0 1024 1024">
-                                <path fill="currentColor"
-                                    d="M111.531 87.765c-9.351 2.542-16.968 8.642-21.456 16.719l-0.090 0.177-3.797 7.125v331.093l4.267 7.595c4.693 8.405 12.544 14.507 21.973 17.109 8.448 2.347 321.365 2.347 329.813 0 9.493-2.619 17.237-8.778 21.88-16.932l0.093-0.177 4.267-7.595v-331.093l-3.797-7.125c-4.523-8.405-11.477-13.739-22.187-16.981-11.179-3.371-320.213-3.285-330.965 0.085zM580.864 87.765c-9.351 2.542-16.968 8.642-21.456 16.719l-0.090 0.177-3.797 7.125v331.093l4.267 7.595c4.693 8.405 12.544 14.507 21.973 17.109 8.448 2.347 321.365 2.347 329.813 0 9.493-2.619 17.237-8.778 21.88-16.932l0.093-0.177 4.267-7.595v-331.093l-3.797-7.125c-4.523-8.405-11.477-13.739-22.187-16.981-11.179-3.371-320.213-3.285-330.965 0.085zM384 277.333v106.667h-213.333v-213.333h213.333v106.667zM853.333 277.333v106.667h-213.333v-213.333h213.333v106.667zM111.531 557.099c-9.351 2.542-16.968 8.642-21.456 16.719l-0.090 0.177-3.797 7.125v331.093l4.267 7.595c4.693 8.405 12.544 14.507 21.973 17.109 8.448 2.347 321.365 2.347 329.813 0 9.493-2.619 17.237-8.778 21.88-16.932l0.093-0.177 4.267-7.595v-331.093l-3.797-7.125c-4.523-8.405-11.477-13.739-22.187-16.981-11.179-3.371-320.213-3.285-330.965 0.085zM580.864 557.099c-9.351 2.542-16.968 8.642-21.456 16.719l-0.090 0.177-3.797 7.125v331.093l4.267 7.595c4.693 8.405 12.544 14.507 21.973 17.109 8.448 2.347 321.365 2.347 329.813 0 9.493-2.619 17.237-8.778 21.88-16.932l0.093-0.177 4.267-7.595v-331.093l-3.797-7.125c-4.523-8.405-11.477-13.739-22.187-16.981-11.179-3.371-320.213-3.285-330.965 0.085zM384 746.667v106.667h-213.333v-213.333h213.333v106.667zM853.333 746.667v106.667h-213.333v-213.333h213.333v106.667z">
-                                </path>
-                            </svg>
-                        </span>
-                        <span class="title">
-                            <?php echo (Registry::load('strings')->group_categories) ?>
-                        </span>
-                        <span class="unread"></span>
-                    </div>
-                </li>
-                <?php
-            } ?>
+          
 
             <?php
             $view_groups = false;
@@ -145,31 +321,7 @@
             if ($view_groups) {
                 ?>
 
-                <li class="load_aside realtime_module load_groups" load="groups" module="groups" unread="0">
-                    <div class="menu_item">
-                        <span class="icon">
-                            <svg fill="currentColor" width="20" height="20" viewBox="0 0 35 35" data-name="Layer 2"
-                                id="Layer_2" xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M30.35,22h-.1a1.25,1.25,0,0,1-1.15-1.34c0-.34,0-.67,0-1A11.84,11.84,0,0,0,21.19,8.44,1.25,1.25,0,0,1,22,6.07a14.37,14.37,0,0,1,9.63,13.59c0,.4,0,.8-.05,1.2A1.24,1.24,0,0,1,30.35,22Z" />
-                                <path
-                                    d="M4.43,22.08A1.25,1.25,0,0,1,3.19,21c0-.42-.06-.86-.06-1.29A14.37,14.37,0,0,1,12.76,6.07a1.25,1.25,0,0,1,.82,2.37A11.84,11.84,0,0,0,5.63,19.66c0,.35,0,.7,0,1.05a1.24,1.24,0,0,1-1.12,1.36Z" />
-                                <path
-                                    d="M17.38,34A14,14,0,0,1,7,29.5a1.25,1.25,0,1,1,1.82-1.71,11.59,11.59,0,0,0,8.55,3.72A11.71,11.71,0,0,0,26,27.71a1.25,1.25,0,1,1,1.84,1.69A14.23,14.23,0,0,1,17.38,34Z" />
-                                <path
-                                    d="M17.39,12.1a5.56,5.56,0,1,1,5.52-5.55A5.55,5.55,0,0,1,17.39,12.1Zm0-8.61a3.06,3.06,0,1,0,3,3.06A3,3,0,0,0,17.39,3.49Z" />
-                                <path
-                                    d="M29.23,30.48a5.56,5.56,0,1,1,5.52-5.56A5.55,5.55,0,0,1,29.23,30.48Zm0-8.62a3.06,3.06,0,1,0,3,3.06A3,3,0,0,0,29.23,21.86Z" />
-                                <path
-                                    d="M5.77,30.48a5.56,5.56,0,1,1,5.53-5.56A5.55,5.55,0,0,1,5.77,30.48Zm0-8.62a3.06,3.06,0,1,0,3,3.06A3,3,0,0,0,5.77,21.86Z" />
-                            </svg>
-                        </span>
-                        <span class="title">
-                            <?php echo (Registry::load('strings')->groups) ?>
-                        </span>
-                        <span class="unread"></span>
-                    </div>
-                </li>
+                
                 <?php
             }
 
@@ -211,104 +363,7 @@
             }
             ?>
 
-            <?php
-            if (role(['permissions' => ['private_conversations' => 'view_private_chats']])) {
-                ?>
-                <li class="load_aside realtime_module load_private_conversations" load="private_conversations"
-                    module="private_conversations">
-                    <div class="menu_item">
-                        <span class="icon">
-
-                            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                viewBox="0 0 1024 1024">
-                                <path fill="currentColor"
-                                    d="M246.858 495.428c0-27.456 22.258-49.714 49.714-49.714v0h232c27.456 0 49.714 22.258 49.714 49.714s-22.258 49.714-49.714 49.714v0h-232c-27.456 0-49.714-22.258-49.714-49.714v0zM296.572 280c-27.456 0-49.714 22.258-49.714 49.714s22.258 49.714 49.714 49.714v0h430.858c27.456 0 49.714-22.258 49.714-49.714s-22.258-49.714-49.714-49.714v0h-430.858z">
-                                </path>
-                                <path fill="currentColor"
-                                    d="M976 197.142c0-82.369-66.773-149.142-149.142-149.142v0h-629.714c-82.369 0-149.142 66.773-149.142 149.142v0 729.142c0 0.002 0 0.004 0 0.006 0 27.456 22.258 49.714 49.714 49.714 13.070 0 24.962-5.044 33.836-13.291l-0.032 0.027 185.666-172.342c8.841-8.216 20.731-13.258 33.8-13.258 0.002 0 0.004 0 0.007 0h475.866c82.369 0 149.142-66.773 149.142-149.142v0-430.858zM826.858 147.428c27.456 0 49.714 22.258 49.714 49.714v0 430.858c0 27.456-22.258 49.714-49.714 49.714v0h-475.798c-0.025 0-0.056 0-0.085 0-39.202 0-74.871 15.125-101.491 39.857l0.094-0.085-102.146 94.788v-615.132c0-27.456 22.258-49.714 49.714-49.714v0h629.714z">
-                                </path>
-                            </svg>
-
-                        </span>
-                        <span class="title">
-                            <?php echo Registry::load('strings')->messages ?>
-                        </span>
-                        <span class="unread"></span>
-                    </div>
-                </li>
-                <?php
-            }
-            if (role(['permissions' => ['site_users' => 'view_online_users']])) {
-                ?>
-                <li class="load_aside realtime_module load_online_users" module="online_users" load="online">
-                    <div class="menu_item">
-                        <span class="icon">
-                            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                viewBox="0 0 1024 1024">
-                                <path fill="currentColor"
-                                    d="M521.192 119.219c80.936 0 142.831 61.892 142.831 142.831s-61.892 142.831-142.831 142.831-142.831-61.892-142.831-142.831 66.653-142.831 142.831-142.831zM521.192 24c-133.308 0-238.050 104.742-238.050 238.050s104.742 238.050 238.050 238.050 238.050-104.742 238.050-238.050-104.742-238.050-238.050-238.050zM411.689 1000h-247.57c-71.414 0-128.547-57.13-128.547-133.308v-80.936c0-119.025 95.219-214.244 214.244-214.244h452.292c28.567 0 47.611 19.044 47.611 47.611s-19.044 47.611-47.611 47.611h-452.292c-66.653 0-119.025 57.13-119.025 119.025v85.697c0 19.044 14.283 38.089 33.328 38.089h247.57c28.567 0 47.611 19.044 47.611 47.611s-19.044 42.85-47.611 42.85z">
-                                </path>
-                                <path fill="currentColor"
-                                    d="M973.486 719.103c-19.044-19.044-47.611-19.044-66.653 0l-166.633 166.633-104.742-99.981c-19.044-19.044-47.611-19.044-66.653 0s-19.044 47.611 0 66.653l133.308 133.308s4.761 4.761 9.522 4.761 4.761 4.761 9.522 4.761h38.089c4.761 0 4.761-4.761 9.522-4.761s4.761-4.761 9.522-4.761l199.961-199.961c14.283-19.044 14.283-47.611-4.761-66.653z">
-                                </path>
-                            </svg>
-
-                        </span>
-                        <span class="title">
-                            <?php echo Registry::load('strings')->online ?>
-                        </span>
-                    </div>
-                </li>
-                <?php
-            }
-            if (Registry::load('settings')->people_nearby_feature === 'enable') {
-                if (role(['permissions' => ['site_users' => 'view_nearby_users']])) {
-                    ?>
-                    <li class="load_aside load_nearby_users" load="nearby_users">
-                        <div class="menu_item">
-                            <span class="icon">
-                                <svg fill="currentColor" width="20" height="20" viewBox="0 0 24 24"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M2,21h8a1,1,0,0,0,0-2H3.071A7.011,7.011,0,0,1,10,13a5.044,5.044,0,1,0-3.377-1.337A9.01,9.01,0,0,0,1,20,1,1,0,0,0,2,21ZM10,5A3,3,0,1,1,7,8,3,3,0,0,1,10,5Zm9,16h0A6.408,6.408,0,0,0,23,15,4,4,0,1,0,15,15,6.408,6.408,0,0,0,19,21h0Zm-1.5-6A1.5,1.5,0,1,1,19,16.5,1.5,1.5,0,0,1,17.5,15Z" />
-                                </svg>
-                            </span>
-                            <span class="title">
-                                <?php echo Registry::load('strings')->nearby_users ?>
-                            </span>
-                        </div>
-                    </li>
-                    <?php
-                }
-            }
-
-            if (Registry::load('settings')->friend_system === 'enable') {
-                if (role(['permissions' => ['friend_system' => 'view_friends']])) {
-                    ?>
-                    <li class="load_aside realtime_module load_friends" module="friends" load="friends">
-                        <div class="menu_item">
-                            <span class="icon">
-                                <svg width="20" height="20" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="none">
-                                    <g fill="currentColor">
-                                        <path fill-rule="evenodd"
-                                            d="M6 2a3.5 3.5 0 100 7 3.5 3.5 0 000-7zM4 5.5a2 2 0 114 0 2 2 0 01-4 0z"
-                                            clip-rule="evenodd"></path>
-                                        <path
-                                            d="M4.25 10A3.75 3.75 0 00.5 13.75v.5a.75.75 0 001.5 0v-.5a2.25 2.25 0 012.25-2.25h3.5A2.25 2.25 0 0110 13.75v.5a.75.75 0 001.5 0v-.5A3.75 3.75 0 007.75 10h-3.5zM10.25 8.25A.75.75 0 0111 7.5h1v-1a.75.75 0 011.5 0v1h1a.75.75 0 010 1.5h-1v1a.75.75 0 01-1.5 0V9h-1a.75.75 0 01-.75-.75z">
-                                        </path>
-                                    </g>
-                                </svg>
-                            </span>
-                            <span class="title">
-                                <?php echo Registry::load('strings')->friends ?>
-                            </span>
-                            <span class="unread"></span>
-                        </div>
-                    </li>
-                    <?php
-                }
-            }
-            ?>
+          
 
 
             <?php if (role(['permissions' => ['site_users' => ['view_site_users', 'block_users', 'ignore_users']], 'condition' => 'OR'])) {
@@ -391,9 +446,9 @@
                 <?php
             }
 
-            if (isset(Registry::load('config')->pro_version) && !empty(Registry::load('config')->pro_version)) {
+            if (isset(Registry::load('config')->app_version) && !empty(Registry::load('config')->app_version)) {
 
-                $show_wallet_menu = false;
+                $show_wallet_menu = true;
 
                 if (role(['permissions' => ['bank_transfer_receipts' => 'view']])) {
                     $show_wallet_menu = true;
@@ -959,8 +1014,9 @@
                         </span>
                     </div>
                 </li>
-                <?php
+                <?php 
             } else if (role(['permissions' => ['storage' => 'access_storage']])) {
+                /*
                 ?>
 
                 <li class="load_aside" load="site_user_files">
@@ -984,7 +1040,7 @@
                         </span>
                     </div>
                 </li>
-                <?php
+                <?php  */
             } ?>
 
             <?php if (role(['permissions' => ['complaints' => ['track_status', 'review_complaints']], 'condition' => 'OR'])) {
@@ -1095,7 +1151,7 @@
 
             <?php
             if (role(['permissions' => ['profile' => 'switch_languages']])) {
-                include 'layouts/chat_page/languages.php';
+               //  include 'layouts/chat_page/languages.php';
             }
             ?>
 
