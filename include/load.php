@@ -22,6 +22,8 @@ if (Registry::load('config')->developer_mode) {
     error_reporting(0);
 }
 
+ 
+
 if (Registry::load('config')->current_page === 'index') {
     redirect();
 } else if (empty(Registry::load('config')->current_page)) {

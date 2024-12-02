@@ -76,6 +76,7 @@ if (role(['permissions' => ['site_adverts' => 'create']]) || role(['permissions'
         "entry_page_form_footer" => Registry::load('strings')->entry_page_form_footer,
         "landing_page_groups_section" => Registry::load('strings')->landing_page_groups_section,
         "landing_page_faq_section" => Registry::load('strings')->landing_page_faq_section,
+        "demo" => Registry::load('strings')->demo,
     ];
 
     $form['fields']->advert_content = [

@@ -15,7 +15,7 @@ if (role(['permissions' => ['site_adverts' => 'create']])) {
         'left_content_block', 'entry_page_form_header',
         'entry_page_form_footer', 'info_panel', 'welcome_screen',
         'landing_page_groups_section', 'landing_page_faq_section',
-        'chat_page_footer','chat_page_header'
+        'chat_page_footer','chat_page_header','demo'
     ];
 
     if (!isset($data['advert_name']) || empty(trim($data['advert_name']))) {

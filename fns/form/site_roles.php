@@ -153,6 +153,7 @@ if (role(['permissions' => ['site_roles' => ['create', 'edit']], 'condition' => 
     $form['fields']->main_panel_content_on_page_load['options'] = [
         "welcome_screen" => Registry::load('strings')->welcome_screen,
         "statistics" => Registry::load('strings')->statistics,
+        "demo" => Registry::load('strings')->demo,
     ];
 
     $form['fields']->site_notifications = [

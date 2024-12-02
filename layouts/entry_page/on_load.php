@@ -22,6 +22,8 @@ if ($slug === 'access_token') {
     include 'layouts/entry_page/user_online_status.php';
 } else if ($slug === 'resend_verification_mail') {
     include 'layouts/entry_page/resend_verification_mail.php';
+}else if ($slug === 'demo') {
+    include 'layouts/entry_page/resend_verification_mail.php';
 }
 
 if (isset($_GET['login_session'])) {

@@ -86,7 +86,7 @@
 
     
 
-    <div class="on_site_load d-none">
+    <div class="on_site_load  ">
         <?php if (isset(Registry::load('config')->load_user_profile) && !empty(Registry::load('config')->load_user_profile)) {
             ?>
             <span class="get_info" user_id="<?php echo(Registry::load('config')->load_user_profile) ?>">Profile</span>
@@ -121,6 +121,10 @@
                 <span class="get_info load_profile_on_page_load">User Profile</span>
                 <?php
             }
+        } else if (isset(Registry::load('config')->load_demo)) {
+            ?>
+            <span class="show_demo stat_menu_item load_demo" stat_title="Demo" statistics="demo">demo</span>
+            <?php
         }
         ?>
     </div>
@@ -206,4 +210,73 @@
     </div>
 
     <?php include 'layouts/chat_page/web_push_service_variables.php'; ?>
+
+    <script>
+        var video_preview=null;
+        var group_header_contents=null;
+        var load_group_header_request=null;
+        var video_chat_available=!1;
+        var videoChatStatusUpdateTimeoutId;
+        var videoChatStatusUpdateRequest;
+        var call_notification_timeout_id;
+
+        
+        $('body').on('click','.load_demo',function(e){open_column('second'); load_demo();});
+
+        function load_demo(){
+            if(!$(this).hasClass('processing')){
+                console.log('loading demo');
+                $(this).addClass('processing');
+                open_column('second');
+                var browser_title=default_meta_title;var browser_address_bar=baseurl;
+                var element=$(this);
+                if($(this).attr('loader')!==undefined){$($(this).attr('loader')).show()}
+                $('.main .middle > .content > div').addClass('d-none');
+                $('.main .middle > .content > .custom_page').removeClass('d-none');
+                $('.main .middle > .content > .custom_page > .page_content').hide();
+                $('.main .middle > .content > .custom_page > .page_content > div').html('');
+                $('.main .middle > .content > .custom_page > .page_content').show();
+
+
+                 
+                var data={load:'custom_page_content',
+                    page_id:-1, 
+                    demo:'yes',
+                    browser_title:'Demo',
+                    browser_address_bar:baseurl+'demo',
+                    title:'Demo',
+                    subtitle:'Demo',
+                    page_content:'  <div> Muy pronto</div> <div class="load_post"> </div>'};
+
+                };
+                    if(user_csrf_token!==null){data.csrf_token=user_csrf_token}
+
+                    if(user_login_session_id!==null&&user_access_code!==null&&user_session_time_stamp!==null)
+                        {data.login_session_id=user_login_session_id;data.access_code=user_access_code;
+                            data.session_time_stamp=user_session_time_stamp}
+
+                    if(data.browser_title!==undefined){browser_title=data.browser_title}
+
+                            
+                        
+                            
+
+                        if(data.browser_address_bar!==undefined){browser_address_bar=data.browser_address_bar}
+                        if(data.title!=undefined){$('.main .middle > .content > .custom_page > .header > .left > .title').replace_text(data.title)}
+                        if(data.subtitle!=undefined){$('.main .middle > .content > .custom_page > .header > .left > .sub_title').replace_text(data.subtitle)}else{$('.main .middle > .content > .custom_page > .header > .left > .sub_title').replace_text('')}
+                        if(data.page_content!=undefined){
+                            $('.main .middle > .content > .custom_page > .page_content > div').html(data.page_content);
+
+                            $('.main .middle > .content > .custom_page > .page_content > div').css({
+                                'background': 'transparent',
+                                'border': '0px'
+                            })
+                            $('.main .middle > .content > .custom_page > .page_content').show()
+                        
+                        }else{console.log('ERROR : '+data)}
+                        if(element.attr('loader')!==undefined){$(element.attr('loader')).hide()
+
+            }
+        }
+    </script>
 </body>

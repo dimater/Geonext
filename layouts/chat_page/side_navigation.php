@@ -75,8 +75,10 @@
                     <div class="child_menu">
                         <ul>
  
-                                <li class="load_aside  "  load="publicaciones_categories">
-                                    <div class="menu_item">
+                                
+
+                                <li class="show_demo load_aside realtime_module load_online_users load_demo" module="online_users" load="online">
+                                   <div class="menu_item">
                                         <span class="icon">
                                         <i class="bi-people custom-cursor-on-hover"></i>
                                         </span>
@@ -84,7 +86,7 @@
                                             Publicaciones  
                                             </span>
                                         <span class="unread"></span>
-                                    </div>
+                                    </div> 
                                 </li>
                                  
 
@@ -940,6 +942,9 @@
 
                                 <li class="load_form" form="welcome_screen" todo="edit">
                                     <?php echo (Registry::load('strings')->welcome_screen) ?>
+                                </li>
+                                <li class="load_form" form="demo" todo="edit">
+                                    <?php echo (Registry::load('strings')->demo) ?>
                                 </li>
                                 <?php
                             }

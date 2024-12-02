@@ -123,10 +123,11 @@
     </div>
 
     <div class="content">
-
+         
         <div class="welcome_screen">
             <?php include 'layouts/chat_page/welcome_screen.php'; ?>
         </div>
+        
 
         <div class="membership_info d-none">
             <?php include 'layouts/chat_page/membership_info.php'; ?>
@@ -138,6 +139,7 @@
 
         <div class="custom_page d-none">
             <?php include 'layouts/chat_page/custom_page.php'; ?>
+            
         </div>
 
         <div class="chatbox d-none boundary">
