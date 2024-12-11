@@ -223,6 +223,103 @@
         
         $('body').on('click','.load_demo',function(e){open_column('second'); load_demo();});
 
+
+        $('body').on('click', '.load_comment', function(e) { 
+            
+        });
+
+        $('body').on('click', '.init_post', function(e) {
+            var data={load:'new_post'};
+            if($(this).attr('user_id')!==undefined)
+            {data.user_id=$(this).attr('user_id') 
+            }
+            
+            if($(window).width()<767.98){$('.main .chat_page_container').removeClass('show_navigation')} 
+
+            open_column('fourth');
+            $('.main .page_column[column="fourth"] .confirm_box > .content > .btn.cancel').trigger('click');
+            $('.main .middle').removeClass('col-lg-9');$('.main .middle').addClass('col-lg-6');
+            $('.main .formbox').addClass('d-none');$('.main .info_panel').removeClass('d-none');
+
+        });
+
+
+        function formatDate($date) {
+                        return date('F j, Y', strtotime($date));
+                    }
+
+        function sanitizeContent($content) {
+                        return htmlspecialchars($content, ENT_QUOTES, 'UTF-8');
+                    }
+
+        function open50post (post){
+
+            var postCard = `
+                                        <div class="post_card">
+                                            <div class="post_header site_record_item user get_info" user_id="`+post.user_id+`">
+                                                <div class="left image_loaded profile_picture">
+                                                    <img src="`+post.profile_picture+`" alt="Profile Picture">
+                                                    <span class="online_status online"></span>
+                                                </div>
+                                                <div class="post_info">
+                                                    <span class="user_name">`+post.display_name+`</span>
+                                                    <span class="post_date"> `+post.post_date+`</span>
+                                                </div>
+                                                <div class="post_options">
+                                                    <span class="options prevent_default"><i class="iconic_three-dots"></i>
+                                                        <div class="options_menu">
+                                                            <span>Edit Post</span>
+                                                        </div>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="post_content">
+                                                <p>`+post.post_content+`</p>
+                                            </div>
+                                            <div class="post_footer">
+                                                <div class="interaction">
+                                                    <span class="icon">👍</span>
+                                                    <span class="count">`+post.like_count+`</span>
+                                                </div>
+                                                <div class="comments">
+                                                    <span class="icon">💬</span>
+                                                    <span class="count">`+post.comment_count+`+</span>
+                                                </div>
+                                                <div class="share">
+                                                    <span class="icon">🔗</span>
+                                                </div>
+                                            </div>
+                                            <div class="load_comment comment_section">
+
+                                                <div class="image_loaded profile_picture ">
+                                                <img class="logged_in_user_avatar" loading="lazy" onerror="handleImageError(this)"
+                                                    src="<?php echo (get_img_url(['from' => 'site_users/profile_pics', 'image' => Registry::load('current_user')->profile_picture, 'gravatar' => Registry::load('current_user')->email_address])) ?>">                                                               
+                                                </div>
+                                                 <div class="comment_input">
+                                                    <input type="text" placeholder="Add a comment...">
+                                                    <span class="send_icon">📤</span>
+                                                </div>
+                                                 
+                                            </div>
+                                        </div>
+                                    `;
+                                  
+                                    console.log(postCard);
+                                    $('.main .middle > .content > .custom_page > .page_content > div').append(postCard);
+
+        }
+        
+        //cerrar menu  cuando sale de la columna
+        var sideNavigation = document.getElementsByClassName('side_navigation')[0];
+        var targetDiv = document.getElementsByClassName('chat_page_container ')[0];
+
+        sideNavigation.addEventListener('mouseleave', function() {
+            if (window.innerWidth > 1024) { // Check if it's desktop
+                targetDiv.classList.remove('show_navigation');
+            }
+        });
+
+
         function load_demo(){
             if(!$(this).hasClass('processing')){
                 console.log('loading demo');
@@ -237,6 +334,58 @@
                 $('.main .middle > .content > .custom_page > .page_content > div').html('');
                 $('.main .middle > .content > .custom_page > .page_content').show();
 
+                var top =`<div class="init_post comment_section" user_id="<?php echo Registry::load('current_user')->id ?>">
+
+                                                <div class="image_loaded profile_picture ">
+                                                <img class="logged_in_user_avatar" loading="lazy" onerror="handleImageError(this)"
+                                                    src="<?php echo (get_img_url(['from' => 'site_users/profile_pics', 'image' => Registry::load('current_user')->profile_picture, 'gravatar' => Registry::load('current_user')->email_address])) ?>">                                                               
+                                                </div>
+                                                 <div class="comment_input">
+                                                    Hola , que nos ceuntas hoy?
+                                                    <span class="send_icon">📤</span>
+                                                </div>
+                                                 
+                                            </div>`;
+
+
+                $('.main .middle > .content > .custom_page > .page_content > div').append(top);
+
+                 // Check if the response is cached
+                 var cachedResponse = localStorage.getItem('demo_response');
+
+                    localStorage.removeItem('demo_response');
+                    if (false) {
+                        // Use cached response
+                        $('.main .middle > .content > .custom_page > .page_content > div').html(cachedResponse);
+                    } else {
+                        var publicaciones ="";
+
+                        $.ajax({
+                            url: 'https://geonetmarketplace.com/api?table=post2&token=4622',
+                            method: 'GET',
+                            success: function(response) {
+                                // Cache the response
+                                localStorage.setItem('demo_response', response);
+                                console.log(response);
+ 
+                                response.forEach(function(post) {
+
+                                     open50post(post);
+
+                                    console.log(post);
+                                   
+                                });
+
+ 
+
+                                // Use the response
+                               // $('.main .middle > .content > .custom_page > .page_content > div').html(publicaciones);
+                            },
+                            error: function() {
+                                console.error('Failed to load demo content');
+                            }
+                        });
+                    }
 
                  
                 var data={load:'custom_page_content',
@@ -264,8 +413,10 @@
                         if(data.browser_address_bar!==undefined){browser_address_bar=data.browser_address_bar}
                         if(data.title!=undefined){$('.main .middle > .content > .custom_page > .header > .left > .title').replace_text(data.title)}
                         if(data.subtitle!=undefined){$('.main .middle > .content > .custom_page > .header > .left > .sub_title').replace_text(data.subtitle)}else{$('.main .middle > .content > .custom_page > .header > .left > .sub_title').replace_text('')}
+
+                           $('.main .middle > .content > .custom_page > .header ').append('<div class="init_post icons toggle_toolbar_button"><span><svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 1024 1024">  <path fill="currentColor" d="M469.333 469.333v-256h85.333v256h256v85.333h-256v256h-85.333v-256h-256v-85.333z"></path>    </svg></span></div>');
                         if(data.page_content!=undefined){
-                            $('.main .middle > .content > .custom_page > .page_content > div').html(data.page_content);
+                         //  $('.main .middle > .content > .custom_page > .page_content > div').html(data.page_content);
 
                             $('.main .middle > .content > .custom_page > .page_content > div').css({
                                 'background': 'transparent',

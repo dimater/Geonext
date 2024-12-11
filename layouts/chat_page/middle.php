@@ -137,9 +137,157 @@
             <?php include 'layouts/chat_page/statistics.php'; ?>
         </div>
 
-        <div class="custom_page d-none">
+        <div class="custom_page ">
+            <style>
+                .post_card {
+                    border: 1px solid #ddd;
+                    border-radius: 8px;
+                    padding: 16px;
+                    margin-bottom: 16px;
+                    background-color: #fff;
+                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                }
+                .init_post{
+                    margin-bottom: 20px;
+                    cursor: pointer;
+                    margin-top: 20px;
+                }
+                .init_post span{
+                    border: 1px solid;
+    border-radius: 100%;
+    padding: 4px;
+                }
+
+                .post_header {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    margin-bottom: 12px;
+
+                }
+
+                .profile_picture {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    overflow: hidden;
+                    margin-right: 12px;
+                    cursor: pointer;
+                    background: #f4f4f4;
+                }
+
+                .profile_picture img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    background: #f4f4f4;
+                    cursor: pointer;
+                }
+
+                .status_indicator {
+                    width: 10px;
+                    height: 10px;
+                    border-radius: 50%;
+                    background-color: #4caf50;
+                    position: absolute;
+                    bottom: 0;
+                    right: 0;
+                    border: 2px solid #fff;
+                }
+
+                .post_info {
+                    flex-grow: 1;
+
+                }
+
+                .user_name {
+                    font-weight: bold;
+                    display: block;
+                    cursor: pointer;
+                }
+
+                .post_date {
+                    color: #888;
+                    font-size: 12px;
+                }
+
+                .post_options {
+                    position: relative;
+                }
+
+                .options_icon {
+                    cursor: pointer;
+                }
+
+                .options_menu {
+                    display: none;
+                    position: absolute;
+                    top: 100%;
+                    right: 0;
+                    background-color: #fff;
+                    border: 1px solid #ddd;
+                    border-radius: 4px;
+                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                }
+
+                .options_menu span {
+                    display: block;
+                    padding: 8px 16px;
+                    cursor: pointer;
+                }
+
+                .options_menu span:hover {
+                    background-color: #f5f5f5;
+                }
+
+                .post_content {
+                    margin-bottom: 12px;
+                }
+
+                .post_footer {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                }
+
+                .interaction, .comments, .share {
+                    display: flex;
+                    align-items: center;
+                    cursor: pointer;
+                }
+
+                .icon {
+                    margin-right: 4px;
+                }
+
+                .comment_section {
+                    display: flex;
+                    align-items: center;
+                    margin-top: 12px;
+                }
+
+                .comment_input {
+                    flex-grow: 1;
+                    display: flex;
+                    align-items: center;
+                    border: 1px solid #ddd;
+                    border-radius: 20px;
+                    padding: 8px 12px;
+                }
+
+                .comment_input input {
+                    border: none;
+                    outline: none;
+                    flex-grow: 1;
+                }
+
+                .send_icon {
+                    cursor: pointer;
+                    margin-left: 8px;
+                }
+            </style>
             <?php include 'layouts/chat_page/custom_page.php'; ?>
-            
+  
         </div>
 
         <div class="chatbox d-none boundary">
