@@ -1,5 +1,5 @@
 <body class='<?php echo(Registry::load('appearance')->body_class) ?> overflow-hidden'>
-
+ 
     <?php include 'assets/headers_footers/chat_page/body.php'; ?>
 
     <div class="preloader">
@@ -226,6 +226,60 @@
 
         $('body').on('click', '.load_comment', function(e) { 
             
+            });
+        $('body').on('click', '.load_more_comments', function(e) {
+            var postId = $(this).data('post-id');
+            var commentsShown = $(this).data('comments-shown');
+            var user_id = "<?php echo Registry::load('current_user')->id ?>"    ;
+            var total_comments = $(this).data('total-comments');
+            var data = {
+                load: 'load_comments',
+                post_id: postId,
+                user_id: user_id,
+                comments_shown: commentsShown
+            };
+
+            $.ajax({
+                url: 'https://geonetmarketplace.com/api?table=post_comment_more&token=4622',
+                method: 'POST',
+                data: data,
+                success: function(response) {
+                    console.log(JSON.stringify(response));
+                    if (response.comments && response.comments.length > 0) {
+                        response.comments.forEach(function(comment) {
+
+                           
+                            var commentHtml = `<div class="comment">
+                                <div class="comment_user_image image_loaded profile_picture">
+                                    <img src="${comment.comment_user_profile_picture}" alt="User Image">
+                                </div>
+                                <div>
+                                    <div class="comment_content comment_input">
+                                        <span class="comment_user_name">${comment.comment_user}<br></span>
+                                        <span class="comment_text">${comment.comment_content}</span>
+                                    </div>
+                                </div>
+                            </div>`;
+                            $(commentHtml).insertBefore('.load_more_comments[data-post-id="' + postId + '"]');
+
+                            
+ 
+                        });
+
+                            commentsShown += response.comments.length;
+                             
+                            $('.load_more_comments[data-post-id="' + postId + '"]').data('comments-shown', commentsShown);
+                            if (commentsShown >= total_comments) { 
+                                $('.load_more_comments[data-post-id="' + postId + '"]').addClass('d-none');
+                            } else {
+                                 
+                            }
+                    }
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
         });
 
         $('body').on('click', '.init_post', function(e) {
@@ -235,12 +289,308 @@
             }
             
             if($(window).width()<767.98){$('.main .chat_page_container').removeClass('show_navigation')} 
+            
+            open_column('third');
+            $('.page_column[column="fourth"]').addClass('d-none');
+            //$('.page_column[column="first"]').addClass('d-none');
+             $('.page_column[column="third"]').removeClass('d-none') 
+            
+            $('.main .middle').removeClass('col-lg-9');
+            $('.main .middle').addClass('col-lg-6'); 
+            $('.main .page_column[column="third"]   .head > .title').html(' Publicar en la comunidad  ');
+            
+           // $('.main .page_column[column="third"]   .head > .title').html(' Publicar en la comunidad  ');
+           
+            $('.main .page_column[column="third"]   .fields ').html('');
+             
+            
+            $('.main .page_column[column="third"]   .fields ').html(` <div class="error" style="display: none;"></div>
+            <form method="post" autocomplete="off" class="dataform" spellcheck="false">
+                <div class="formdata">                
+                    <div class="field">
+                        
+                        <textarea id="post_content" name="post_content" rows="6" autocomplete="off">¿Qué estas pensando ? </textarea>
+                    </div>
+                    <div class="col-12 row">
+                    
+                        <div class="col-4 bloqueicono text-amarillo" id="post_imagen">                         
+                            <span class="selector"> 
+                                <input type="file" id="post_images" name="post_images[]" accept="image/png,image/x-png,image/gif,image/jpeg,image/webp" multiple style="display: none;">
+                                <label for="post_images" class="file-browse">
+                                    <i class="bi bi-images text-amarillo" style="  font-size: x-large;"></i> <span>  Imagen</span>  
+                                </label> 
+                            </span>
+                        </div>
 
-            open_column('fourth');
-            $('.main .page_column[column="fourth"] .confirm_box > .content > .btn.cancel').trigger('click');
-            $('.main .middle').removeClass('col-lg-9');$('.main .middle').addClass('col-lg-6');
-            $('.main .formbox').addClass('d-none');$('.main .info_panel').removeClass('d-none');
+                         <div class="col-4 bloqueicono text-verde" id="bton-youtobe">
+                         <i class="bi bi-caret-right-square-fill"></i>
+                            <span>Youtobe</span>
+                        </div>
 
+                        <div class="col-4 bloqueicono text-azul" id="bton-link"> 
+                         <i class="bi bi-link"></i>
+                            <span>Link</span>
+                        </div>
+                    
+                    
+                    </div>
+                     
+                  
+                    <div class="field post_video_url " id="post_url" style="display: none;">                       
+                        <input id="post_video_url" placeholder="https://"  name="post_video_url" type="url" value=""  autocomplete="off">
+                        <br>
+                         <label style=" font-size: 10px;">Link URL</label>
+                    </div> 
+                     
+                </div>
+            </form> `);
+ 
+            $('.main .page_column[column="third"]   .bottom > .submit').html(' Enviar  ');
+
+        
+
+
+        });
+
+        function cambiotipopost() {
+            var selectedValue = $('#tipopost').val();
+            if (selectedValue == '3') {
+                $('.field.filebrowse').removeClass('d-none');
+               // $('.field.post_video_url').removeClass('d-none');
+            } else if (selectedValue == '2') {
+               // $('.field.post_video_url').addClass('d-none');
+                $('.field.filebrowse').removeClass('d-none');
+            } else {
+              //  $('.field.post_video_url').addClass('d-none');
+                $('.field.filebrowse').addClass('d-none');
+            }
+        }
+
+        $('body').on('click', '#post_imagen', function(e) {
+            $('#post_url').css('display', 'none');
+        });
+
+        $('body').on('click', '#bton-youtobe', function(e) {
+            console.log(' youtobe');
+            $('#post_url label').text('Link de Youtobe');
+            $('#post_video_url').attr('placeholder', 'https://www.youtube.com/watch?v='); 
+            $('#post_url').css('display', 'block');
+        }); 
+        $('body').on('click', '#bton-link', function(e) {
+            console.log('link');
+            $('#post_url  label').text('Link  ');
+            $('#post_video_url').attr('placeholder', 'https://');
+            $('#post_url').css('display', 'block');
+        });
+        $('  .bottom > .submit').on('click', function(e) {
+                e.preventDefault();
+                
+                var form = $('.main .page_column[column="third"]   .fields > .formdata');
+                var datapost = new FormData(form[0]);
+                datapost.append('load', 'new_post');
+                datapost.append('user_id', '<?php echo Registry::load('current_user')->id ?>'); 
+                datapost.append('post_title', $('#post_title').val());
+                datapost.append('post_content', $('#post_content').val());
+                var postImageInput =  $('#post_images').val() ? document.getElementById('post_image') : null;
+                if (postImageInput && postImageInput.files.length > 0) {
+                    for (var i = 0; i < postImageInput.files.length; i++) {
+                        datapost.append('post_images[]', postImageInput.files[i]);
+                    }
+                }
+                datapost.append('post_video_url', $('#post_video_url').val());
+
+                console.log(datapost); 
+
+                
+
+                $.ajax({
+                    url: 'https://geonetmarketplace.com/api?table=post3&token=4622',
+                    method: 'POST',
+                    data: datapost,
+                    contentType: false,
+                    processData: false,
+                    success: function(response) { 
+                        console.log(response);
+                         //load_demo();
+                    },
+                    error: function( error ) {  
+                        console.log(error); 
+                    }
+                });
+        });
+
+       
+        $('body').on('click', '.interaction', function(e) {
+                var postId = $(this).data('post');
+                var user_id = "<?php echo Registry::load('current_user')->id ?>"    ;
+                var like_count = $(this).find('.count').text(); 
+                var like = $(this).find('.icon').hasClass('bi-balloon-heart-fill');
+                  like = like ? 0 : 1;  
+
+                var data = {
+                    load: 'like_post',
+                    post_id: postId,
+                    user_id: user_id,
+                    like: like
+                };
+
+                if(like_count == 'Sé el primero en dar like'){
+                    like_count = 0;
+                }
+
+                console.log(like_count);
+                $.ajax({
+                    url: 'https://geonetmarketplace.com/api?table=post_like&token=4622',
+                    method: 'POST',
+                    data: data,
+                    success: function(response) {
+                        console.log(response);
+
+
+                        if (like) {
+                            like_count++;
+                            $(this).find('.icon >i').removeClass('bi-balloon-heart');
+                            $(this).find('.icon >i').addClass('bi-balloon-heart-fill'); 
+                             $(this).find('.count').text(like_count);
+                        }  
+                        else {
+                            like_count--;
+                            $(this).find('.icon >i').removeClass('bi-balloon-heart-fill');
+                            $(this).find('.icon >i').addClass('bi-balloon-heart'); 
+                            $(this).find('.count').text(like_count);
+                        } 
+
+                        console.log(like_count);
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                }); 
+
+                console.log(postId);
+        });
+
+        //enviar comentario
+        $('body').on('click', '.send_icon', function(e) {
+            var postId = $(this).data('post');
+            var user_id = "<?php echo Registry::load('current_user')->id ?>"    ;
+            var comment = $('#post_' + postId).val();
+
+            if (comment.length <= 3) {
+                alert('Comment must be greater than 3 characters.');
+                return;
+            }
+
+            var data = {
+                load: 'new_comment',
+                post_id: postId,
+                user_id: user_id,
+                comment: comment
+            };
+
+            console.log(data);
+            $.ajax({
+                url: 'https://geonetmarketplace.com/api?table=post_comment&token=4622',
+                method: 'POST',
+                data: data,
+                success: function(response) {
+
+                    console.log(response.comment); 
+                    $('#post_' + postId).val('');
+                    var commentHtml = `<div class="comment">
+                        <div class="comment_user_image image_loaded profile_picture">
+                            <img src="${response.comment.comment_user_profile_picture}" alt="User Image">
+                        </div>
+                        <div>
+                            <div class="comment_content comment_input">
+                                <span class="comment_user_name">${response.comment.comment_user}<br></span>
+                                <span class="comment_text">${response.comment.comment_content}</span>
+                            </div>
+                        </div>
+                    </div>`;
+                    $(commentHtml).insertBefore('.load_more_comments[data-post-id="' + postId + '"]');
+
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+
+        });
+
+        $('body').on('click', '.comments', function(e) {
+            var postId = $(this).data('post');
+            var user_id = "<?php echo Registry::load('current_user')->id ?>"    ;
+            var data = {
+                load: 'load_comments',
+                post_id: postId,
+                user_id: user_id
+            };
+
+            $.ajax({
+                url: 'https://geonetmarketplace.com/api?table=post_comment&token=4622',
+                method: 'POST',
+                data: data,
+                success: function(response) {
+                    console.log(response);
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            }); 
+
+            console.log(postId);
+        });
+
+
+        $('body').on('click', '.post_options', function(e) {
+            var postId = $(this).data('post');
+            var optionsMenu = $(this).find('.options_menu');
+            optionsMenu.toggleClass('show');
+
+            console.log(postId); 
+ 
+            Swal.fire({
+                title: 'Desea eliminar este post?',
+                text: "No podra revertir esta accion!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, Borrarlo!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Perform the delete action here
+                    $.ajax({
+                        url: 'https://geonetmarketplace.com/api?table=post_delete&token=4622',
+                        method: 'POST',
+                        data: { post_id: postId },
+                        success: function(response) {
+
+                            
+
+                            Swal.fire(
+                                'Deleted!',
+                                'Your post has been deleted.',
+                                'success'
+                            );
+                            // Optionally, remove the post from the DOM
+                            $('.post_card[data-post-id="' + postId + '"]').remove();
+                        },
+                        error: function(error) {
+                            Swal.fire(
+                                'Error!',
+                                'There was an error deleting your post.',
+                                'error'
+                            );
+                        }
+                    });
+                }
+            });
+                
+                
+             
+            
         });
 
 
@@ -254,40 +604,148 @@
 
         function open50post (post){
 
-            var postCard = `
-                                        <div class="post_card">
+            var postCard = ` <div class="post_card">
                                             <div class="post_header site_record_item user get_info" user_id="`+post.user_id+`">
                                                 <div class="left image_loaded profile_picture">
                                                     <img src="`+post.profile_picture+`" alt="Profile Picture">
                                                     <span class="online_status online"></span>
                                                 </div>
                                                 <div class="post_info">
-                                                    <span class="user_name">`+post.display_name+`</span>
+                                                    <span class="user_name">  `+post.display_name+`</span>
                                                     <span class="post_date"> `+post.post_date+`</span>
-                                                </div>
-                                                <div class="post_options">
-                                                    <span class="options prevent_default"><i class="iconic_three-dots"></i>
-                                                        <div class="options_menu">
-                                                            <span>Edit Post</span>
-                                                        </div>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="post_content">
-                                                <p>`+post.post_content+`</p>
-                                            </div>
-                                            <div class="post_footer">
-                                                <div class="interaction">
-                                                    <span class="icon">👍</span>
-                                                    <span class="count">`+post.like_count+`</span>
-                                                </div>
-                                                <div class="comments">
-                                                    <span class="icon">💬</span>
-                                                    <span class="count">`+post.comment_count+`+</span>
-                                                </div>
-                                                <div class="share">
-                                                    <span class="icon">🔗</span>
-                                                </div>
+                                                </div> `; 
+
+
+                                                if (post.user_id == <?php echo Registry::load('current_user')->id ?>  || 'administrators' == '<?php echo  Registry::load('current_user')->site_role_attribute ?>' ) { 
+                                               postCard += ` <div class="post_options" data-post="` + post.post_id+`">
+                                                                <span class="options prevent_default"><i class="iconic_three-dots"></i>
+                                                                    <div class="options_menu">
+                                                                        <span>Edit Post</span>
+                                                                    </div>
+                                                                </span>
+                                                             </div>`; 
+                                                }
+
+
+                                            postCard += ` </div>
+                                            <div class="post_content"> `;  
+
+                                                if (post.post_content) { 
+                                                      postCard += post.post_content;
+
+                                                }
+
+                                                if (post.video_url) { 
+                                                
+                                                    if (post.video_url.includes('youtube.com') || post.video_url.includes('youtu.be')  ) {
+
+                                                        $embed_url =post.video_url ;
+                                                              
+                                                            var embed_url = post.video_url.replace('watch?v=', 'embed/');
+                                                          
+
+
+                                                        postCard +=  "<iframe width='100%' height='450' src='"+embed_url+"' frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>";
+ 
+                                                        } else { 
+
+  
+                                                                                                    
+                                                             postCard +=  "<a href='"+post.video_url+"' target='_blank'>"; 
+                                                            if (!post.media_url) { 
+                                                              postCard += `  <div class="visit_url_button">  Visitar Link : ` +post.video_url+`    </div>` ;
+                                                            }
+
+                                                            if (post.media_url) {
+                                                            postCard +=  " <div class='post_image' ><img src='"+post.media_url+"' alt='"+post.post_title+"'> </div>";
+                                                            }
+ 
+                                                    }
+
+    
+
+                                                    
+                                                }else{
+
+                                                    media_urls = JSON.parse(post.media_urls);
+ 
+
+                                                    if ( post.media_count > 1) {  
+                                                        postCard +=  "<div class='post_images'>";
+                                                      
+                                                         postCard +=  "<div class='row'> ";
+                                                        media_urls.forEach(function(media_url) {
+                                                                var  index = media_urls.indexOf(media_url);
+                                                            postCard += `<div class='col-6 col-md-4 col-lg-4'>
+                                                                            <img src='${media_url.media_url}' class='d-block w-100' alt='${media_url.media_url}' style='width: 100%; height: 380px; object-fit: cover;'>
+                                                                         </div>`;
+
+                                                        });
+ 
+                                                                     
+                                                        
+                                                        postCard +=  "</div> </div>";
+
+
+                                                    }
+                                                    else{
+
+
+                                                        if (post.media_url) {
+                                                         postCard +=  " <div class='post_image' ><img src='"+post.media_url+"' alt='"+post.media_url+"'> </div>";
+                                                
+                                                        }
+
+                                                    } 
+                                                }
+ 
+
+                                            if (post.video_url) {
+                                                if (post.video_url.includes('youtube.com') || post.video_url.includes('youtu.be')) 
+                                                    {
+                                                         
+                                                    }else{
+                                                        postCard +=  "</a>";
+                                                    } 
+                                                }
+ 
+                                                postCard = postCard +`  </div>  
+                                            <div class="post_footer">`; 
+
+
+                                                if (post.like_count == 0) {
+                                                    postCard += `<div class="interaction no-likes" data-post="` + post.post_id+`">
+                                                                    <span class="icon"><i class="bi bi-balloon-heart"></i></span>
+                                                                    <span class="count">Sé el primero en dar like</span>
+                                                                </div>`;
+                                                } else {
+                                                    postCard += `<div class="interaction" data-post="` + post.post_id+`">
+                                                                    <span class="icon"><i class="bi bi-balloon-heart-fill"></i></span>
+                                                                    <span class="count">` + post.like_count + `</span>
+                                                                </div>`;
+                                                }
+                                                
+
+                                                if (post.comment_count == 0) {
+                                                    postCard += `<div class="comments no-comments" data-post="` + post.post_id+`">
+                                                                    <span class="icon"><i class="bi bi-chat"></i></span>
+                                                                    <span class="count">Sé el primero en comentar</span>
+                                                                </div>`;
+                                                } else {
+                                                    postCard += `<div class="comments" data-post="` + post.post_id+`">
+                                                                    <span class="icon"><i class="bi bi-chat-dots-fill"></i></span>
+                                                                    <span class="count">` + post.comment_count + `+</span>
+                                                                </div>`;
+                                                }
+
+                                                
+                                                 
+
+                                                postCard = postCard +`     <div class="share" data-post="` + post.post_id+`">
+                                                    <span class="icon social_media_share" share_on="facebook" share_url="https://chat.geonet.top/demo" ><i class="bi bi-share"></i></span>
+                                                </div>`; 
+
+                                                 postCard = postCard +`
                                             </div>
                                             <div class="load_comment comment_section">
 
@@ -296,17 +754,63 @@
                                                     src="<?php echo (get_img_url(['from' => 'site_users/profile_pics', 'image' => Registry::load('current_user')->profile_picture, 'gravatar' => Registry::load('current_user')->email_address])) ?>">                                                               
                                                 </div>
                                                  <div class="comment_input">
-                                                    <input type="text" placeholder="Add a comment...">
-                                                    <span class="send_icon">📤</span>
+                                                    <input type="text" id="post_` + post.post_id+`" placeholder="Add a comment...">
+                                                    <span class="send_icon send_message" data-post="` + post.post_id+`"> 
+                                                        <svg fill="currentColor" width="23px" height="23px" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                                                            <path d="M5.975 17.504l14.287.001-6.367 6.366L16.021 26l10.004-10.003L16.029 6l-2.128 2.129 6.367 6.366H5.977z"></path>
+                                                        </svg>
+                                                    </span>
                                                 </div>
                                                  
-                                            </div>
-                                        </div>
-                                    `;
-                                  
-                                    console.log(postCard);
-                                    $('.main .middle > .content > .custom_page > .page_content > div').append(postCard);
+                                            </div> `;
+ 
+                                           
 
+                                             
+                                            post.comments = JSON.parse(post.comments);
+                                             var comments_to_show = 5;
+                                            var total_comments = post.comment_count;
+                                            var comments_shown = 0;
+
+                                            if (Array.isArray(post.comments)) {
+
+                                                post.comments.forEach(function(comment, index) { 
+                                                if (index >= comments_to_show) {
+                                                    return;
+                                                }
+
+                                                if(comment.comment_user != null)  
+                                                    {
+                                                comments_shown++;
+                                                postCard += `<div class="comment">
+                                                    <div class="comment_user_image  image_loaded profile_picture ">
+                                                        <img src="${comment.comment_user_profile_picture}" alt="User Image">
+                                                    </div>
+                                                    <div>
+                                                        <div class="comment_content comment_input">
+                                                            <span class="comment_user_name">${comment.comment_user}<br></span>
+                                                            <span class="comment_text">${comment.comment_content}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>`;
+
+                                                }
+                                            });
+
+                                            if (total_comments > comments_shown) {
+                                                postCard += `<button class="load_more_comments" total-comments="` +total_comments+` " data-post-id="${post.post_id}" data-comments-shown="${comments_shown}">Ver más comentarios</button>`;
+                                            }else {
+                                                postCard += `<button class="load_more_comments d-none" total-comments="` +total_comments+` " data-post-id="${post.post_id}" data-comments-shown="${comments_shown}">Sin comentarios</button>`;
+                                          
+
+                                            }
+                                        postCard = postCard +`  </div>   `;    
+                                        
+                                    }; 
+                                   
+            $('#postCard').append(postCard);
+            
+                
         }
         
         //cerrar menu  cuando sale de la columna
@@ -319,60 +823,24 @@
             }
         });
 
-
-        function load_demo(){
-            if(!$(this).hasClass('processing')){
-                console.log('loading demo');
-                $(this).addClass('processing');
-                open_column('second');
-                var browser_title=default_meta_title;var browser_address_bar=baseurl;
-                var element=$(this);
-                if($(this).attr('loader')!==undefined){$($(this).attr('loader')).show()}
-                $('.main .middle > .content > div').addClass('d-none');
-                $('.main .middle > .content > .custom_page').removeClass('d-none');
-                $('.main .middle > .content > .custom_page > .page_content').hide();
-                $('.main .middle > .content > .custom_page > .page_content > div').html('');
-                $('.main .middle > .content > .custom_page > .page_content').show();
-
-                var top =`<div class="init_post comment_section" user_id="<?php echo Registry::load('current_user')->id ?>">
-
-                                                <div class="image_loaded profile_picture ">
-                                                <img class="logged_in_user_avatar" loading="lazy" onerror="handleImageError(this)"
-                                                    src="<?php echo (get_img_url(['from' => 'site_users/profile_pics', 'image' => Registry::load('current_user')->profile_picture, 'gravatar' => Registry::load('current_user')->email_address])) ?>">                                                               
-                                                </div>
-                                                 <div class="comment_input">
-                                                    Hola , que nos ceuntas hoy?
-                                                    <span class="send_icon">📤</span>
-                                                </div>
-                                                 
-                                            </div>`;
+ 
 
 
-                $('.main .middle > .content > .custom_page > .page_content > div').append(top);
 
-                 // Check if the response is cached
-                 var cachedResponse = localStorage.getItem('demo_response');
-
-                    localStorage.removeItem('demo_response');
-                    if (false) {
-                        // Use cached response
-                        $('.main .middle > .content > .custom_page > .page_content > div').html(cachedResponse);
-                    } else {
-                        var publicaciones ="";
-
-                        $.ajax({
-                            url: 'https://geonetmarketplace.com/api?table=post2&token=4622',
+        function cargarpost ( limit = 50, offset = 0){
+            console.log('cargarpost');
+             $.ajax({
+                            url: 'https://geonetmarketplace.com/api?table=post2&token=4622&limit='+limit+'&offset='+offset,
                             method: 'GET',
                             success: function(response) {
                                 // Cache the response
-                                localStorage.setItem('demo_response', response);
-                                console.log(response);
+                                localStorage.setItem('demo_response', response); 
  
                                 response.forEach(function(post) {
 
                                      open50post(post);
 
-                                    console.log(post);
+                                       //console.log(post);
                                    
                                 });
 
@@ -381,11 +849,150 @@
                                 // Use the response
                                // $('.main .middle > .content > .custom_page > .page_content > div').html(publicaciones);
                             },
-                            error: function() {
+                            error: function( error ) {
+                                console.log(error);
                                 console.error('Failed to load demo content');
                             }
                         });
-                    }
+        }
+
+        function load_demo(){
+            if(!$(this).hasClass('processing')){
+                console.log('loading demo');
+                $(this).addClass('processing');
+                open_column('second');
+                var browser_title=default_meta_title;var browser_address_bar=baseurl;
+                var element=$(this);
+
+                $('.page_column[column="fourth"]').addClass('d-none');
+                //$('.page_column[column="first"]').addClass('d-none');
+                $('.page_column[column="third"]').addClass('d-none') 
+                $('.main .middle').removeClass('col-lg-6');
+                $('.main .middle').addClass('col-lg-9'); 
+
+                if($(this).attr('loader')!==undefined){$($(this).attr('loader')).show()}
+                $('.main .middle > .content > div').addClass('d-none');
+                $('.main .middle > .content > .custom_page').removeClass('d-none');
+                $('.main .middle > .content > .custom_page > .page_content').hide();
+                $('.main .middle > .content > .custom_page > .page_content > div').html('');
+                $('.main .middle > .content > .custom_page > .page_content').show(); 
+                var top =`<div class="col-md-9" >
+                             
+                            <div id="postCard"></div> 
+                            
+                        </div>
+                        <div class="col-md-3 ADS"> 
+
+                        <div class="video_home   rounded bordered  padding-10 sombra  " style=" height: auto;margin-bottom: 20px;   padding: 10px;">
+                                <iframe width="100%" height="155" src="https://www.youtube.com/embed/DLxYfKj5o_8?si=zaHi4DTnOPRFcV-D" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen=""></iframe>
+                                        <div style=" padding: 10px;   display: block;  text-align: justify;">
+                                            <div class="nombre_producto text3 col-12" style=" float: left; display: contents; margin-bottom: 10px; ">  
+                                            Sé parte de la innovación en el mercado de la topografía, brinda servicio técnico en tu localidad  con la mejor plataforma digital . <br> </div>
+                                                
+                                                
+                                        </div>
+                                        <a target="_blank" href="https://wa.me/16592574462?text=w19207515">  
+                                                    <div class="descuento btn  " data-cod="1872">Más Información  </div>
+                                                </a>
+                                    
+                        </div>
+
+                        <div class="video_home">
+                         <a target="_blank" href="https://geonetmarketplace.com/index.php?view=item&cod=2372">
+                             <div class="recommended_product_banner rounded bordered padding-10 sombra" style="height: auto; margin-bottom: 20px; padding: 10px;">
+                                <img src="https://geonetmarketplace.com/assets/images/empresas/463429imgen64.jpg" alt="Recommended Product" style="width: 100%; height: auto;">
+                              </div
+                              ></a>
+                        </div>
+
+
+                        <div class="social_follow_buttons sticky-banner video_home">
+                            <h3>Síguenos</h3>
+                            <div class="social_buttons">
+                                <a href="https://www.facebook.com" class="social_button facebook" target="_blank">
+                                    <i class="bi bi-facebook"></i>
+                                    
+                                </a>
+                                 
+                                <a href="https://www.instagram.com" class="social_button instagram" target="_blank">
+                                    <i class="bi bi-instagram"></i> 
+                                </a>
+                                <a href="https://www.youtube.com" class="social_button youtube" target="_blank">
+                                  <i class="bi bi-youtube"></i>
+                                </a>
+                                <a href="https://www.tiktok.com" class="social_button tiktok" target="_blank">
+                                  <i class="bi bi-tiktok"></i>
+
+                                </a>
+                                 
+                            </div>
+                        </div>
+                        <style>
+                            .sticky-banner {
+                                position: -webkit-sticky;
+                                position: sticky;
+                                top: 10px;
+                                z-index: 1000; 
+                                padding: 10px;
+                                border-radius: 5px;
+                                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                            }
+                        </style>
+
+                        <style>
+                            .social_follow_buttons { 
+                                bottom: 10px;
+                                right: 10px;
+                                background: #fff;
+                                padding: 10px;
+                                border-radius: 5px;
+                                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                            }
+                            .social_follow_buttons h3 {
+                                margin-bottom: 10px;
+                                font-size: 16px;
+                                text-align: center;
+                            }
+                            .social_buttons {
+                                display: flex; 
+                                gap: 10px;
+                            }
+                            .social_button {
+                                display: flex;
+                                align-items: center;
+                                padding: 10px;
+                                border-radius: 5px;
+                                color: #fff;
+                                text-decoration: none;
+                                font-size: 14px;
+                            }
+                            .social_button i {
+                                margin-right: 10px;
+                                font-size: 18px;
+                            }
+                            .social_button.facebook { background: #3b5998; }
+                            .social_button.youtube { background: red; }
+                            .social_button.instagram { background: #e4405f; }
+                            .social_button.tiktok { background: #000000; }
+                        </style>
+                            <!-- geonet columna2 -->
+                            <ins class="adsbygoogle"
+                                style="display:block"
+                                data-ad-client="ca-pub-7680806035842389"
+                                data-ad-slot="6841416885"
+                                data-ad-format="auto"
+                                data-full-width-responsive="true"></ins> 
+                            </div>`;
+
+
+                $('.main .middle > .content > .custom_page > .page_content > div').append(top);
+
+                 // Check if the response is cached
+                  
+                        var publicaciones ="";
+
+                       cargarpost();
+                    
 
                  
                 var data={load:'custom_page_content',
@@ -393,8 +1000,11 @@
                     demo:'yes',
                     browser_title:'Demo',
                     browser_address_bar:baseurl+'demo',
-                    title:'Demo',
-                    subtitle:'Demo',
+                    title:' ',
+                    subtitle: `<div class="comment_input init_post  comment_section" user_id="<?php echo Registry::load('current_user')->id ?>">
+                                                    Hola <?php echo Registry::load('current_user')->name ?> , que nos cuentas hoy?
+                                                     
+                                                </div>`,
                     page_content:'  <div> Muy pronto</div> <div class="load_post"> </div>'};
 
                 };
@@ -405,23 +1015,27 @@
                             data.session_time_stamp=user_session_time_stamp}
 
                     if(data.browser_title!==undefined){browser_title=data.browser_title}
-
-                            
-                        
-                            
+ 
 
                         if(data.browser_address_bar!==undefined){browser_address_bar=data.browser_address_bar}
                         if(data.title!=undefined){$('.main .middle > .content > .custom_page > .header > .left > .title').replace_text(data.title)}
-                        if(data.subtitle!=undefined){$('.main .middle > .content > .custom_page > .header > .left > .sub_title').replace_text(data.subtitle)}else{$('.main .middle > .content > .custom_page > .header > .left > .sub_title').replace_text('')}
+                        //if(data.subtitle!=undefined){$('.main .middle > .content > .custom_page > .header > .left > .sub_title').replace_text(data.subtitle)}else{$('.main .middle > .content > .custom_page > .header > .left > .sub_title').replace_text('')}
+                        $('.main .middle > .content > .custom_page > .header > .left ').css('display','contents');
+                        $('.main .middle > .content > .custom_page > .header > .left > .sub_title').css('width','100%');
+                        $('.main .middle > .content > .custom_page > .header > .left > .sub_title').html(data.subtitle);
 
-                           $('.main .middle > .content > .custom_page > .header ').append('<div class="init_post icons toggle_toolbar_button"><span><svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 1024 1024">  <path fill="currentColor" d="M469.333 469.333v-256h85.333v256h256v85.333h-256v256h-85.333v-256h-256v-85.333z"></path>    </svg></span></div>');
-                        if(data.page_content!=undefined){
+                            if(data.page_content!=undefined){
                          //  $('.main .middle > .content > .custom_page > .page_content > div').html(data.page_content);
 
                             $('.main .middle > .content > .custom_page > .page_content > div').css({
                                 'background': 'transparent',
                                 'border': '0px'
                             })
+
+                            $('.main .middle > .content > .custom_page > .page_content > div').addClass('row');
+ 
+
+
                             $('.main .middle > .content > .custom_page > .page_content').show()
                         
                         }else{console.log('ERROR : '+data)}

@@ -140,11 +140,10 @@
         <div class="custom_page ">
             <style>
                 .post_card {
-                    border: 1px solid #ddd;
+                    border: 1px solid #6c757d6b     ;
                     border-radius: 8px;
                     padding: 16px;
-                    margin-bottom: 16px;
-                    background-color: #fff;
+                    margin-bottom: 16px; 
                     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
                 }
                 .init_post{
@@ -213,6 +212,7 @@
 
                 .post_options {
                     position: relative;
+                    cursor: pointer;
                 }
 
                 .options_icon {
@@ -271,8 +271,9 @@
                     display: flex;
                     align-items: center;
                     border: 1px solid #ddd;
-                    border-radius: 20px;
+                    border-radius: 8px;
                     padding: 8px 12px;
+                    background: white;
                 }
 
                 .comment_input input {
@@ -285,6 +286,137 @@
                     cursor: pointer;
                     margin-left: 8px;
                 }
+                .post_image img{
+                    width: 100%;
+                     object-fit: cover;
+                }
+
+                .interaction .icon , .comments .icon , .share .icon{
+                    color: #ffc107;
+                }
+
+                body.dark_mode .comment_input{
+                    background: #1e1d1d;
+                    border: 1px solid #383838;
+                }
+
+                body.dark_mode .comment_input input{
+                    background: #1e1d1d;
+                    color: #a7a7a7;
+                }
+                .comment{
+                    margin-top: 10px;
+                    display: flex;
+                }
+                .comment_content {
+                    width: fit-content;
+                    display: table;
+                }
+                .comment_user_name{
+                    font-weight: 600;
+                }
+                .comment_text{
+                    font-weight: 100;
+                    font-size: small;
+                }
+                .comment_date{
+
+                }
+                .send_icon {
+                    cursor: pointer; 
+                    background: #ffc107;
+                    color: white;
+                    border-radius: 4px;
+                }
+                .load_more_comments{
+                    background: transparent;
+                    border: 0px;
+                    color: gray;
+                }
+
+                .descuento{
+                    color: #000000;
+                    background:#ffc107;
+                }
+                .video_home{
+                    background: var(--form-secondary-bg-color);
+                    padding: 15px;
+                    border: 1px solid var(--form-primary-border-color);
+                    font-weight: 600;
+                    color: var(--form-primary-text-color);
+                }
+                .field textarea{
+                    width: 100%;
+                    border: solid 1px #ccc;
+                    height: 60vh;
+                    padding: 10px;
+
+                }
+
+                #post_video_url{
+                    width: 100%;   
+                    border: solid 1px #ccc;                    border: solid 1px #ccc;
+                }
+                .bloqueicono{
+                    padding: 10px;
+                    align-items: center;
+                    text-align: center;
+                    font-size: x-large;
+                    cursor: pointer;
+                }
+                .text-amarillo{
+                    color: #ffc107;
+                }
+                .text-verde{
+                    color: #4caf50;
+                }
+                .text-azul{
+                    color: #2196f3;
+                }
+                .text-rojo{
+                    color: #f44336;
+                }
+
+                .bloqueicono span{
+                     
+                    font-size: 10px;
+                    color: #000000;
+                    display: block;
+                }
+                #carousel-item img{
+                    height: 500px;
+                    object-fit: contain;
+                }
+
+                .carousel-inner{
+                    height: 500px;
+                }
+                .carousel-control-prev-icon, .carousel-control-next-icon{
+                    background-color: #000000;
+                }
+               
+                .carousel-item {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    height: 500px;
+                    overflow: hidden;
+                }
+
+                .carousel-item img {
+                    max-height: 100%;
+                    object-fit: contain;
+                }
+
+                .carousel-control-prev, .carousel-control-next {
+                    width: 5%;
+                }
+
+                .carousel-control-prev-icon, .carousel-control-next-icon {
+                    background-color: #000000;
+                }
+                 
+
             </style>
             <?php include 'layouts/chat_page/custom_page.php'; ?>
   

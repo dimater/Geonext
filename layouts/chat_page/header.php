@@ -88,6 +88,6 @@ $cache_timestamp = '?cache='.Registry::load('settings')->cache_timestamp;
     }
     ?>
     <?php include 'assets/headers_footers/chat_page/header.php'; ?>
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </head>

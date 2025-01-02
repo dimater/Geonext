@@ -18,5 +18,5 @@
     </div>
 </div>
 <div class="page_content">
-    <div></div>
+    <div></div> 
 </div>
